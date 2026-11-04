@@ -13,14 +13,26 @@ target_sources(firmware
         src/main.c
 )
 
+add_compile_definitions(F_CPU=16000000UL)
+add_compile_options(
+    -mmcu=atmega328p
+    -Os
+)
+
 add_subdirectory(
     ${CUSTOM_LIBS_DIR}/EZ_Display
     ${CMAKE_CURRENT_SOURCE_DIR}/build/EZ_Display
 )
 
+add_subdirectory(
+    ${CUSTOM_LIBS_DIR}/ssd1306
+    ${CMAKE_CURRENT_SOURCE_DIR}/build/ssd1306
+)
+
 target_link_libraries(firmware
     PRIVATE 
         EZ_Display
+        ssd1306
 )
 
 target_compile_options(firmware
