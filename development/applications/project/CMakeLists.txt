@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.20)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(CUSTOM_LIBS_DIR "/workspace/development/libs")
+
 project(avr_template)
 
 add_executable(firmware)
@@ -9,6 +11,16 @@ add_executable(firmware)
 target_sources(firmware
     PRIVATE
         src/main.c
+)
+
+add_subdirectory(
+    ${CUSTOM_LIBS_DIR}/EZ_Display
+    ${CMAKE_CURRENT_SOURCE_DIR}/build/EZ_Display
+)
+
+target_link_libraries(firmware
+    PRIVATE 
+        EZ_Display
 )
 
 target_compile_options(firmware
