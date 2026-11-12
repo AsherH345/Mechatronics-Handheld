@@ -22,13 +22,15 @@
 #
 #################################################################
 
-.PHONY: docs library help
+.PHONY: docs library help clean build
 
 help:
 	@echo "============== SSD1306 library ================"
 	@echo "make docs          generates documentation"
 	@echo "make help          prints this help"
 	@echo "make check         run cppcheck tests"
+	@echo "make build		  create default library"
+	@echo "make clean		  delete any build files"
 	@echo ""
 	@echo "to build examples use scripts in tools subdir"
 
@@ -44,3 +46,11 @@ check:
 	    --error-exitcode=1 src
 	@echo "[DONE]"
 
+build:
+	@cmake -B build \
+	-DCMAKE_TOOLCHAIN_FILE="/workspace/development/cmake/toolchain-avr.cmake" \
+	-DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+	@cmake --build build
+
+clean:
+	@rm -rf build
